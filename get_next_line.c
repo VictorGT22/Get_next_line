@@ -6,22 +6,21 @@
 /*   By: victgonz <victgonz@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/19 18:00:38 by victgonz          #+#    #+#             */
-/*   Updated: 2023/02/08 12:44:15 by victgonz         ###   ########.fr       */
+/*   Updated: 2023/02/09 09:30:01 by victgonz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char *get_full_line(int fd,  char *spare_line)
+char	*get_full_line(int fd, char *spare_line)
 {
-	char *buffer;
-	int bytes_read;
+	char	*buffer;
+	int		bytes_read;
 
 	bytes_read = 1;
-	buffer = calloc(sizeof(char),  BUFFER_SIZE + 1);
-	
+	buffer = calloc(sizeof(char), BUFFER_SIZE + 1);
 	if (!buffer)
-		return(NULL);
+		return (NULL);
 	while (bytes_read != 0 && !ft_strchr(spare_line, '\n'))
 	{
 		bytes_read = read(fd, buffer, BUFFER_SIZE);
@@ -43,7 +42,7 @@ static char	*get_line(char *spare_line)
 	int		len;
 	char	*line;
 
-	if (!spare_line[0])
+	if (!spare_line[0] || !spare_line)
 		return (NULL);
 	len = ft_chr_index(spare_line, '\n');
 	line = malloc(sizeof(char) * (len + 2));
@@ -66,6 +65,8 @@ char	*get_spare_line(char *spare_line)
 	char	*newline;
 
 	i = 0;
+	if (!spare_line)
+		return (NULL);
 	index = ft_chr_index(spare_line, '\n');
 	if (!spare_line[index])
 	{
@@ -80,7 +81,7 @@ char	*get_spare_line(char *spare_line)
 		newline[i++] = spare_line[index++];
 	newline[i] = '\0';
 	free(spare_line);
-	return(newline);
+	return (newline);
 }
 
 char	*get_next_line(int fd)
@@ -89,7 +90,7 @@ char	*get_next_line(int fd)
 	static char	*spare_line;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
-		return (0);
+		return (NULL);
 	spare_line = get_full_line(fd, spare_line);
 	if (!spare_line)
 		return (NULL);

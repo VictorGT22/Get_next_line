@@ -6,22 +6,21 @@
 /*   By: victgonz <victgonz@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/19 18:00:38 by victgonz          #+#    #+#             */
-/*   Updated: 2023/02/08 12:58:01 by victgonz         ###   ########.fr       */
+/*   Updated: 2023/02/09 09:14:48 by victgonz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line_bonus.h"
 
-char *get_full_line(int fd,  char *spare_line)
+char	*get_full_line(int fd, char *spare_line)
 {
-	char *buffer;
-	int bytes_read;
+	char	*buffer;
+	int		bytes_read;
 
 	bytes_read = 1;
-	buffer = calloc(sizeof(char),  BUFFER_SIZE + 1);
-	
+	buffer = calloc(sizeof(char), BUFFER_SIZE + 1);
 	if (!buffer)
-		return(NULL);
+		return (NULL);
 	while (bytes_read != 0 && !ft_strchr(spare_line, '\n'))
 	{
 		bytes_read = read(fd, buffer, BUFFER_SIZE);
@@ -80,7 +79,7 @@ char	*get_spare_line(char *spare_line)
 		newline[i++] = spare_line[index++];
 	newline[i] = '\0';
 	free(spare_line);
-	return(newline);
+	return (newline);
 }
 
 char	*get_next_line(int fd)
